@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# ignore this files
+start_prjct.sh
+
+sp_of_shukaku/
+
+test
+
+2020 S2 DSA Assignment v1.0.pdf
