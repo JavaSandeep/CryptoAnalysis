@@ -50,6 +50,16 @@ class AssetNode:
     @property
     def get_symbol(self):
         return str(self.symbol)
+    
+    def get_attribute(self, key='price'):
+        if key=='price':
+            return self.price
+        elif key=='volume':
+            return self.volume
+        elif key=='market_cap':
+            return self.market_cap
+        else:
+            return self.price
 
 
 class Edge:
@@ -68,7 +78,6 @@ class TradesEdge(Edge):
     """
     Custom edge class for the trade data
     """
-    next=None
     def __init__(self, start, end, priceChangePercent=None,\
         lastPrice=None,lastQty=None,openPrice=None,highPrice=None,lowPrice=None\
             ,volume=None,closeTime=None,count=None):
@@ -86,15 +95,48 @@ class TradesEdge(Edge):
     
     def __str__(self):
         template="""
-        Start node: {0}\nEnd node: {1}\nSymbol: {2}\nVolume: {3}\nCount: {4}
+        Base node: {0}\nQuote node: {1}\nSymbol: {2}\nPrice Change Percent: {5}\nLast Price: {6}\nLast Quantity: {7}\nOpen Price:{8}\n
+        High Price: {9}\nLow Price: {10}\nClose Time: {11}\nVolume: {3}\nCount: {4}
         """
         return template.format(
-            self.start_node.__str__(),
-            self.end_node.__str__(),
+            self.start_node.get_symbol,
+            self.end_node.get_symbol,
             self.symbol,
             self.volume,
-            self.count
+            self.count,
+            self.priceChangePercent,
+            self.lastPrice,
+            self.lastQty,
+            self.openPrice,
+            self.highPrice,
+            self.lowPrice,
+            self.closeTime
         )
+    
+    def get_attribute(self, key='lastPrice'):
+        """
+        Method to get specific attribute from the Trade nodes
+        """
+        if key=='volume':
+            return self.volume
+        elif key=='count':
+            return self.count
+        elif key=='priceChangePercent':
+            return self.priceChangePercent
+        elif key=='lastPrice':
+            return self.lastPrice
+        elif key=='lastQty':
+            return self.lastQty
+        elif key=='openPrice':
+            return self.openPrice
+        elif key=='highPrice':
+            return self.highPrice
+        elif key=='lowPrice':
+            return self.lowPrice
+        elif key=='closeTime':
+            return self.closeTime
+        else:
+            return self.lastPrice
 
     @property
     def get_symbol(self):

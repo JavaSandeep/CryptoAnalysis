@@ -4,7 +4,7 @@
 # The Graph will be implemented using Adjanceny list 
 import traceback
 
-from linkedlist import LinkedList
+from .linkedlist import LinkedList
 
 
 class Graph:
@@ -19,7 +19,10 @@ class Graph:
         # List of the trade edges
         self.edges=LinkedList()
     
-    def _add_vertex(self, node):
+    def __str__(self):
+        return self.edges.__str__()
+
+    def add_vertex(self, node):
         """
         Function to add vertex, adding vertex would be private
         """
@@ -54,8 +57,8 @@ class Graph:
         returns: True if success else False
         """
         try:
-            self._add_vertex(edge.start_node)
-            self._add_vertex(edge.end_node)
+            self.add_vertex(edge.start_node)
+            self.add_vertex(edge.end_node)
             # adding to edges
             self.edges.insert(
                 edge
@@ -85,6 +88,23 @@ class Graph:
             temp_node=temp_node.next
         # check for the last not
         if self._is_adjacent(curr_node, temp_node.data_obj):
+            adjacentNodesList.insert(temp_node.data_obj)
+        
+        return adjacentNodesList
+
+    def get_edges_list_pk(self, pk):
+        """
+        Function to get all adjacent nodes to given node
+        """
+        adjacentNodesList = LinkedList()
+
+        temp_node=self.edges._head
+        while temp_node.next is not None:
+            if temp_node.data_obj.get_symbol==pk:
+                adjacentNodesList.insert(temp_node.data_obj)
+            temp_node=temp_node.next
+        # check for the last not
+        if temp_node.data_obj.get_symbol==pk:
             adjacentNodesList.insert(temp_node.data_obj)
         
         return adjacentNodesList

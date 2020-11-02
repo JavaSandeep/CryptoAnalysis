@@ -73,5 +73,22 @@ class TestLinkedList(unittest.TestCase):
         llist.insert_last(ll3)
         self.assertEqual(llist.length, 3)
 
+    def test_sort(self):
+        ll1=AssetNode(name='TestCase',symbol='TestCase',price=50,volume='TestCase1',market_cap='TestCase2')
+        ll2=AssetNode(name='TestCase2',symbol='TestCase2',price=20,volume='TestCase2',market_cap='TestCase2')
+        ll3=AssetNode(name='TestCase3',symbol='TestCase3',price=70,volume='TestCase3',market_cap='TestCase3')
+        ll4=AssetNode(name='TestCase4',symbol='TestCase4',price=40,volume='TestCase4',market_cap='TestCase4')
+
+        llist = LinkedList()
+        llist.insert_first(ll1)
+        llist.insert_last(ll2)
+        llist.insert_last(ll3)
+        llist.insert_last(ll4)
+
+        print(llist)
+        blistt=llist.sort('price')
+        print(blistt)
+
+
 if __name__=='__main__':
     unittest.main()
