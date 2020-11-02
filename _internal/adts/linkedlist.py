@@ -2,6 +2,9 @@
 from structs import Decorators
 
 
+from structs import LinkedListNode
+
+
 class LinkedList:
     """
     Linked list implementation in python
@@ -16,10 +19,10 @@ class LinkedList:
 
     def __str__(self):
         temp=self._head
-        while temp.next is not None:
-            print(temp)
-            temp=temp.next
         print(temp)
+        while temp.next is not None:
+            print(temp.next)
+            temp=temp.next
         return "End of list"
 
     @property
@@ -33,16 +36,15 @@ class LinkedList:
         self.length+=1
 
     # Insert methods
-    @Decorators.enforce_llassetnode_datatype
     def insert_first(self, node):
         """
         Warning! This method inserts at head position
         Overrides head
         """
+        node=LinkedListNode(node)
         self._head = node
         self.increase_len
     
-    @Decorators.enforce_llassetnode_datatype
     def insert_last(self, node):
         """
         Function to insert at the end of the linked list
@@ -50,32 +52,37 @@ class LinkedList:
         if self.is_empty:
             self.insert_first(node)
             return
+
+        # It is important that node typecast is done below here
+        node=LinkedListNode(node)
         start = self._head
         while start.next is not None:
             start=start.next
         start.next=node
         self.increase_len
     
-    @Decorators.enforce_llassetnode_datatype
     def insert(self, node):
         self.insert_last(node)
 
     # Searching methods
-    @Decorators.enforce_llassetnode_datatype
     def find(self, node):
         """
         Function to search the linked list
         param node: node item that needs to be search 
         return: True if node exists in list else False
         """
+        if self.is_empty:
+            print("Warning. List is empty")
+            return False
+    
         temp=self._head
 
-        if node==temp:
+        if node==temp.data_obj:
             return True
         
         # search until end of list
         while temp.next is not None:
-            if temp.next==node:
+            if temp.next.data_obj==node:
                 return True
             else:
                 temp=temp.next
