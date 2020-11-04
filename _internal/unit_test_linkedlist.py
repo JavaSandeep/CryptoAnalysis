@@ -1,7 +1,7 @@
 import unittest
 
-from structs import AssetNode, LinkedListNode
-from linkedlist import LinkedList
+from adts.structs import AssetNode, LinkedListNode
+from adts.linkedlist import LinkedList
 
 
 class TestLinkedList(unittest.TestCase):

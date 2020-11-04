@@ -1,9 +1,14 @@
 import csv
 import json
 import pickle
+import re
+from decimal import Decimal
 
-from _internal.adts.structs import AssetNode, TradesEdge
-from _internal.adts.linkedlist import LinkedList
+from .adts.structs import AssetNode, TradesEdge
+from .adts.linkedlist import LinkedList
+
+currencyToFloat=lambda x: float(re.sub(r'[^\d.]', '', x))
+
 
 class DataLoader:
     """
@@ -25,8 +30,8 @@ class DataLoader:
                     asset_list.insert(AssetNode(
                         name=name,
                         symbol=sym,
-                        price=price,
-                        volume=vol,
+                        price=currencyToFloat(price),
+                        volume=currencyToFloat(vol),
                         market_cap=mark_cap,
                     ))
                 else:
@@ -81,8 +86,7 @@ class DataLoader:
                         count=count
                     )
                 )
-
-
+        
         return asset_list,g
 
     def dump_serialize(self, asset_list, g):

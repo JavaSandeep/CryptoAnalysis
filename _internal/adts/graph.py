@@ -2,6 +2,8 @@
 
 ######################
 # The Graph will be implemented using Adjanceny list 
+from __future__ import absolute_import
+
 import traceback
 
 from .linkedlist import LinkedList
@@ -11,13 +13,15 @@ class Graph:
     """
     Class implemention for the graph
     """
-
     def __init__(self):
         # List of Asset nodes
         self.vertices=LinkedList()
 
         # List of the trade edges
         self.edges=LinkedList()
+
+        # List of paths
+        self.list_paths=LinkedList()
     
     def __str__(self):
         return self.edges.__str__()
@@ -108,3 +112,28 @@ class Graph:
             adjacentNodesList.insert(temp_node.data_obj)
         
         return adjacentNodesList
+
+    # Graph traversal
+    def dfs(self, source, dest, visited, path):
+        """
+        DFS function for the graph
+        """
+        visited.insert(source)
+        path.insert(source)
+
+        if source==dest:
+            self.list_paths.insert(path)
+        else:
+            adjacentList=self.get_adjacent(source)
+            temp=adjacentList._head
+            # Entire looping through each nodes
+            while temp.next is not None:
+                if not visited.find(temp):
+                    self.dfs(temp.data_obj, dest, visited, path)
+                temp=temp.next
+            if not visited.find(temp):
+                self.dfs(temp.data_obj, dest, visited, path)
+            # Entire looping ends
+        
+        path.remove_last()
+        visited.remove(source)

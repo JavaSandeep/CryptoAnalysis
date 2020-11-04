@@ -2,7 +2,7 @@ import unittest
 
 from _internal.adts.linkedlist import LinkedList
 from _internal.adts.graph import Graph
-from data_loader import DataLoader
+from _internal.data_loader import DataLoader
 
 
 class TestLinkedList(unittest.TestCase):

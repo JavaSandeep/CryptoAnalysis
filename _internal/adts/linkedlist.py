@@ -1,6 +1,7 @@
 #!/usr/bin/python3
+from __future__ import absolute_import
 
-from structs import LinkedListNode
+from .structs import LinkedListNode
 
 
 class LinkedList:
@@ -160,9 +161,69 @@ class LinkedList:
                 idx_counter+=1
                 temp=temp.next
 
+    def _relloc(self, prev, node):
+        if prev is None:
+            # The node is head # Head also has two condition
+            # Single item list or multi item list
+            if self.length==1:
+                self._head=None
+            else:
+                self._head=node
+        else:
+            prev.next=node.next
+        return
+
+    def remove(self, node):
+        if self.is_empty:
+            print("Warning. List is empty")
+            return False
+        # Head, last node, any middle node
+        prev=None
+        temp=self._head
+
+        # Head condition
+        if temp.data_obj==node:
+            self._relloc(None, temp)
+            self.length-=1
+            return True
+
+        # search until end of list
+        while temp.next is not None:
+            if temp.data_obj==node:
+                self._relloc(prev, temp)
+                self.length-=1
+                return True
+            else:
+                prev=temp
+                temp=temp.next
+        # node does not exist
+
+        # Tail condition
+        self._relloc(prev, temp)
+        self.length-=1
+        return True
+        ##########
+
+    def remove_head(self):
+        return self.remove(self._head)
+    
+    def remove_last(self):
+        """
+        Function that removes the last element, similar to pop
+        """
+        if self.is_empty:
+            print("Warning. List is empty")
+            return False
+        temp=self._head
+        # search until end of list
+        while temp.next is not None:
+            temp=temp.next
+        
+        return self.remove(temp)
+
     # sorting mechanism
     # uses selection sort
-    def sort(self, key):
+    def sort(self, key, inverse=False):
         """
         Function to perform sorting based on attribute (Selection sort is used)
         params key: key using which sorting needs to be performed
@@ -170,8 +231,12 @@ class LinkedList:
         for j in range(self.length):
             min_idx=j
             for k in range(j+1, self.length):
-                if self.get_index(min_idx).get_attribute(key) > self.get_index(k).get_attribute(key):
-                    min_idx=k
+                if not inverse:
+                    if self.get_index(min_idx).get_attribute(key) > self.get_index(k).get_attribute(key):
+                        min_idx=k
+                else:
+                    if self.get_index(min_idx).get_attribute(key) < self.get_index(k).get_attribute(key):
+                        min_idx=k
             
             # Swap the found minimum to the initial position
             tmp_obj = self.get_index(j)

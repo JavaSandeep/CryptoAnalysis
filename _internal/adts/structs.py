@@ -3,6 +3,8 @@
 # Basic units
 # Graph nodes and linked list nodes are mostly same
 # except for the part how they are linked to one another
+from __future__ import absolute_import
+
 
 class Decorators(object):
     @classmethod

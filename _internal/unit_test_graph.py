@@ -1,8 +1,8 @@
 import unittest
 
-from structs import AssetNode, LinkedListNode, TradesEdge
-from linkedlist import LinkedList
-from graph import Graph
+from adts.structs import AssetNode, LinkedListNode, TradesEdge
+from adts.linkedlist import LinkedList
+from adts.graph import Graph
 
 
 class TestLinkedList(unittest.TestCase):
