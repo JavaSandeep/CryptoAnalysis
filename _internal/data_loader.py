@@ -50,7 +50,7 @@ class DataLoader:
         # Algo
         # read tokens -> get base and quote assets
         # get trade info from trade_info json
-        asset_list=self.load_asset(asset_list)
+        # asset_list=self.load_asset(asset_list)
 
         with open(token_file_name) as tfn:
             # uses dict here
@@ -89,11 +89,16 @@ class DataLoader:
         
         return asset_list,g
 
-    def dump_serialize(self, asset_list, g):
-        pickle.dump(asset_list, 'asset_list.pickle')
-        pickle.dump(g, 'graph_trade_info.pickle')
+    def dump_serialize(self, asset_list, g, asset_name='asset_list.pickle', trade_name='graph_trade_info.pickle'):
+        with open(asset_name, 'wb') as f:
+            pickle.dump(asset_list, f)
+        with open(trade_name, 'wb') as f:
+            pickle.dump(g, f)
+        return True 
 
     def load_serailize(self, asset_file_name='asset_list.pickle', trade_file_name='graph_trade_info.pickle'):
-        asset_list = pickle.load(asset_file_name)
-        g = pickle.load(trade_file_name)
+        with open(asset_file_name, 'rb') as f:
+            asset_list = pickle.load(f)
+        with open(trade_file_name, 'rb') as f:
+            g = pickle.load(f)
         return asset_list, g

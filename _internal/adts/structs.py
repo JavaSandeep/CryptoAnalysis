@@ -6,26 +6,6 @@
 from __future__ import absolute_import
 
 
-class Decorators(object):
-    @classmethod
-    def enforce_llassetnode_datatype(cls, func):
-        def wrapper(self, var):
-            if type(var)!=LinkedListNode:
-                print("Error. Argument passed was not of LinkedListNode data type")
-                raise Exception("Invalid data type. expected LinkedListNode datatype, got "+str(type(var)))
-            return func(self, var)
-        return wrapper
-    
-    @classmethod
-    def enforce_graph_assetnode_datatype(cls, func):
-        def wrapper(self, var):
-            if type(var)!=LinkedListAssetNode:
-                print("Error. Argument passed was not of LinkedListAssetNode data type")
-                raise Exception("Invalid data type. expected LinkedListAssetNode datatype, got "+str(type(var)))
-            return func(self, var)
-        return wrapper
-    
-
 class AssetNode:
     """
     Class implementation for generic nodes

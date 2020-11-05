@@ -9,6 +9,7 @@ def main_menu():
     _api = APIManager()
 
     argv=cli_main()
+
     i,r=argv.i,argv.r
     # if r is None, it is interactive mode
     if i:
@@ -23,7 +24,8 @@ def main_menu():
             if is_continue:
                 _api.process(opt1, opt2, g_vars)
     elif r:
-        _api.process(6, None, tuple([None, None]))
-        _api.process(7, None, tuple([None, None]))
-
-main_menu()
+        asset_file, trade_file=r
+        _api.process(1,1, tuple([asset_file, None]))
+        _api.process(1,2, tuple([trade_file, None]))
+        _api.process(6, None, tuple([asset_file, trade_file]))
+        _api.process(7, None, tuple([asset_file, trade_file]))

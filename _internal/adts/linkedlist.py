@@ -18,11 +18,11 @@ class LinkedList:
 
     def __str__(self):
         temp=self._head
-        print(temp)
+        outputt=str(temp.data_obj.__str__())
         while temp.next is not None:
-            print(temp.next)
+            outputt+=str(temp.next.data_obj.__str__())
             temp=temp.next
-        return "End of list"
+        return outputt
 
     @property
     def is_empty(self):
@@ -31,8 +31,30 @@ class LinkedList:
         return False
 
     @property
-    def increase_len(self):
+    def _increase_len(self):
         self.length+=1
+
+    def _relloc(self, prev, node):
+        if prev is None:
+            # The node is head # Head also has two condition
+            # Single item list or multi item list
+            if self.length==1:
+                self._head=None
+            else:
+                self._head=node.next
+        else:
+            prev.next=node.next
+        return
+
+    def print_same_line(self):
+        if self.length==0:
+            return "Empty"
+        temp=self._head
+        outputt=temp.data_obj.get_symbol
+        while temp.next is not None:
+            outputt+=(' -> '+temp.next.data_obj.get_symbol)
+            temp=temp.next
+        return outputt
 
     # Insert methods
     def insert_first(self, node):
@@ -42,7 +64,7 @@ class LinkedList:
         """
         node=LinkedListNode(node)
         self._head = node
-        self.increase_len
+        self._increase_len
     
     def insert_last(self, node):
         """
@@ -58,7 +80,7 @@ class LinkedList:
         while start.next is not None:
             start=start.next
         start.next=node
-        self.increase_len
+        self._increase_len
     
     def insert(self, node):
         self.insert_last(node)
@@ -137,41 +159,30 @@ class LinkedList:
                 temp=temp.next
 
     def set_index(self, idx, data_obj):
-        if idx > (self.length-1):
+        if 0 <= idx <= (self.length-1):
+            if self.is_empty:
+                print("Warning. List is empty")
+                return False
+            
+            if idx==0:
+                self._head.data_obj=data_obj
+                return True
+            
+            temp=self._head
+
+            # search until end of list
+            # The counter is indexing to the next element
+            idx_counter=1
+            while temp.next is not None:
+                if idx==idx_counter:
+                    temp.next.data_obj=data_obj
+                    return True
+                else:
+                    idx_counter+=1
+                    temp=temp.next
+        else:
             print("Error. Index out of order")
             return False
-        if self.is_empty:
-            print("Warning. List is empty")
-            return False
-        
-        if idx==0:
-            self._head.data_obj=data_obj
-            return True
-        
-        temp=self._head
-
-        # search until end of list
-        # The counter is indexing to the next element
-        idx_counter=1
-        while temp.next is not None:
-            if idx==idx_counter:
-                temp.next.data_obj=data_obj
-                return True
-            else:
-                idx_counter+=1
-                temp=temp.next
-
-    def _relloc(self, prev, node):
-        if prev is None:
-            # The node is head # Head also has two condition
-            # Single item list or multi item list
-            if self.length==1:
-                self._head=None
-            else:
-                self._head=node
-        else:
-            prev.next=node.next
-        return
 
     def remove(self, node):
         if self.is_empty:
@@ -199,13 +210,16 @@ class LinkedList:
         # node does not exist
 
         # Tail condition
-        self._relloc(prev, temp)
-        self.length-=1
-        return True
+        if temp.data_obj==node:
+            self._relloc(prev, temp)
+            self.length-=1
+            return True
         ##########
+        print("Node not found")
+        return False
 
     def remove_head(self):
-        return self.remove(self._head)
+        return self.remove(self._head.data_obj)
     
     def remove_last(self):
         """
@@ -219,7 +233,7 @@ class LinkedList:
         while temp.next is not None:
             temp=temp.next
         
-        return self.remove(temp)
+        return self.remove(temp.data_obj)
 
     # sorting mechanism
     # uses selection sort

@@ -4,6 +4,7 @@
 # The Graph will be implemented using Adjanceny list 
 from __future__ import absolute_import
 
+from copy import deepcopy
 import traceback
 
 from .linkedlist import LinkedList
@@ -54,6 +55,9 @@ class Graph:
         # check for the last not
         return ((temp_node.data_obj.start_node==curr_node) and\
             (temp_node.data_obj.end_node==end_node))
+
+    def reset_list_path(self):
+        self.list_paths=LinkedList()
 
     def add_edge(self, edge):
         """
@@ -118,22 +122,40 @@ class Graph:
         """
         DFS function for the graph
         """
+        if path.find(source):
+            print("This is already found: {0}".format(source.get_symbol))
+            return
         visited.insert(source)
         path.insert(source)
 
         if source==dest:
-            self.list_paths.insert(path)
+            # print(path)
+            # self.list_paths.insert(path)
+            self.list_paths.insert(deepcopy(path))
         else:
             adjacentList=self.get_adjacent(source)
             temp=adjacentList._head
             # Entire looping through each nodes
-            while temp.next is not None:
-                if not visited.find(temp):
+            if adjacentList.length>0:
+                while temp.next is not None:
+                    if not visited.find(temp.data_obj):
+                        self.dfs(temp.data_obj, dest, visited, path)
+                    temp=temp.next
+                if not visited.find(temp.data_obj):
                     self.dfs(temp.data_obj, dest, visited, path)
-                temp=temp.next
-            if not visited.find(temp):
-                self.dfs(temp.data_obj, dest, visited, path)
             # Entire looping ends
         
         path.remove_last()
         visited.remove(source)
+
+    def print_paths(self):
+        if self.list_paths.length==0:
+            print("No paths yet...")
+            return
+        
+        temp=self.list_paths._head
+        print(temp.data_obj.print_same_line())
+        # # search until end of list
+        while temp.next is not None:
+            print(temp.next.data_obj.print_same_line())
+            temp=temp.next

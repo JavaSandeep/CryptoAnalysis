@@ -12,11 +12,12 @@ class InteractiveExtendedMenu:
             # It has three more hidden option
             if option_2==1:
                 # get the file name
-                arg1=input("Enter the asset data file name: ")
+                arg1=input("Enter the asset data file name (asset_info.csv): ")
             elif option_2==2:
-                arg1=input("Enter the trade data file name: ")
+                arg1=input("Enter the trade data file name (trade_info.json): ")
             elif option_2==3:
-                arg1=input("Enter the serialized file name: ")
+                arg1=input("Enter the asset file name to be loaded (asset_list.pickle) :")
+                arg2=input("Enter the trade file name to be loaded (graph_trade_info.pickle) :")
         elif option_1==2:
             arg1=input("Enter the asset symbol (eg: BTC): ")
         elif option_1==3:
@@ -27,7 +28,8 @@ class InteractiveExtendedMenu:
         elif option_1==5:
             arg1=input("Enter the asset symbol (eg: BTC): ")
         elif option_1==8:
-            file_name=input("Enter the file name to be saved as: ")
+            arg1=input("Enter the asset file name to be saved as (asset_list.pickle) :")
+            arg2=input("Enter the trade file name to be saved as (graph_trade_info.pickle) :")
         elif option_1==9:
             is_continue=False
 
