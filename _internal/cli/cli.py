@@ -42,5 +42,3 @@ def cli_main():
         print("Error: {0}".format(ex))
         traceback.print_exc()
         sys.exit(1)
-
-cli_main()

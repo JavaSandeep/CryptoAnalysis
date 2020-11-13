@@ -41,7 +41,7 @@ class APIManager:
                     asset_file_name='asset_list.pickle'
                 if trade_file_name=='' or (trade_file_name is None):
                     trade_file_name='graph_trade_info.pickle'
-                self.assets, self.trade=self._dloader.load_serailize(asset_file_name, trade_file_name)
+                self.assets, self.trade=self._dloader.load_serialize(asset_file_name, trade_file_name)
                 print("Number of assets loaded: {0}".format(self.assets.length))
                 print("Number of trades loaded: {0}".format(self.trade.edges.length))
         elif option_1==2:
@@ -142,20 +142,20 @@ class APIManager:
                 print(temp.start_node.get_symbol+' -> '+temp.end_node.get_symbol + ' ('+temp.get_symbol+') '+': '+str(temp.lastPrice))
             print('\n\n')
             sorted=self.trade.edges.sort(key='volume', inverse=True)
-            print("Top 10 assets based on their volume")
+            print("Top 10 trades based on their volume")
             for i in range(10):
                 temp=sorted.get_index(i)
                 print(temp.start_node.get_symbol+' -> '+temp.end_node.get_symbol + ' ('+temp.get_symbol+') '+': '+str(temp.volume))
             print('\n\n')
 
             sorted=self.trade.edges.sort(key='count', inverse=True)
-            print("Top 10 assets based on their count")
+            print("Top 10 trades based on their count")
             for i in range(10):
                 temp=sorted.get_index(i)
                 print(temp.start_node.get_symbol+' -> '+temp.end_node.get_symbol + ' ('+temp.get_symbol+') '+': '+str(temp.count))
             print('\n\n')
             sorted=self.trade.edges.sort(key='count')
-            print("Lowest 10 assets based on their count")
+            print("Lowest 10 trades based on their count")
             for i in range(10):
                 temp=sorted.get_index(i)
                 print(temp.start_node.get_symbol+' -> '+temp.end_node.get_symbol + ' ('+temp.get_symbol+') '+': '+str(temp.count))
